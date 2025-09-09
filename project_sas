@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <string.h>
+
+int count = 0; // Nombre actuel de contacts
+int id = 0; // 
+int boucle_while =0;
+struct Equipe{
+char nom_et_prenom[50];
+int numeroMaillot;
+char poste[11];
+int age;
+int buts;
+};
+struct Equipe equip[100];
+int choix_de_post;
+
+void clear_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+void Ajouter_un_joueur(int choix_count_joeur){
+    
+for(int count_joeur =0;count_joeur<choix_count_joeur;count_joeur++){
+boucle_while =0;
+clear_buffer();
+ printf("Enter nom et prenom : ");
+  
+  fgets(equip[count].nom_et_prenom, sizeof(equip[count].nom_et_prenom), stdin);
+  equip[count].nom_et_prenom[strcspn(equip[count].nom_et_prenom, "\n")] = '\0';
+  printf("Enter numero Maillot : ");
+  scanf("%d",&equip[count].numeroMaillot);
+while (boucle_while != 1)
+{
+  printf("choisir le poste :\n1)gardien\n2)défenseur\n3)milieu\n4)attaquant");
+  printf("\n Enter num de poste :");
+  scanf("%d",&choix_de_post);
+  if(choix_de_post==1||choix_de_post==2||choix_de_post==3||choix_de_post==4){
+    boucle_while =1;
+  switch(choix_de_post){
+       case 1:
+       strcpy(equip[count].poste,"gardien");
+       break;
+       case 2:
+       strcpy(equip[count].poste,"défenseur");
+       break;
+       case 3:
+       strcpy(equip[count].poste,"milieu");
+       break;
+       case 4:
+       strcpy(equip[count].poste,"attaquant");
+       break;
+
+       
+  }
+
+}else{
+    printf("\n !! choix incorect !!\n");
+}
+}
+printf("Enter age: ");
+scanf("%d",&equip[count].age);
+
+printf("Enter buts : ");
+scanf("%d",&equip[count].buts);
+
+count ++;
+id ++;
+    }
+}
+void  main() {
+   
+   Ajouter_un_joueur(2);
+}
