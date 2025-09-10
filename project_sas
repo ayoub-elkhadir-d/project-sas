@@ -253,9 +253,27 @@ case 2: // Tri par âge
 
  }
 
-}
 
-  
+void modifier_un_joueur(){
+boucle_while=0;
+  while (boucle_while != 1)
+{
+  printf("chose  :\n1)Modifier le poste\n2)Modifier lâge \n3)le nombre de buts\n");
+  printf("\n Enter num de poste :");
+  scanf("%d",&choix_de_post);
+    switch(choix_Affichage){
+      case 1:
+
+      break;
+      case 2:
+
+      break;
+      case 3:
+
+      break;
+    }
+  }
+}
 
 void  main() {
    struct Equipe e;
