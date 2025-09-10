@@ -393,7 +393,51 @@ printf("!! no result !!");
         }
      }
     } 
+void menu(){
+ 		int choix;
+ 		while(1){
+ 			line();
+ 		printf("\n click enter to chow menu ");
+ 		
+ 		if(getchar()=='\n'){
+ 		printf("\n 1. Ajouter un Contact");
+ 		printf("\n 2. Modifier un Contact");
+ 		printf("\n 3 . Supprimer un Contact");
+ 		printf("\n 4. Afficher Tous les Contacts");
+ 		printf("\n 5. Rechercher un Contact");
+ 		
+ 		printf("\n Entre choix : ");
+ 		scanf("%d",&choix);
+ 		clear_buffer();
+ 		switch(choix){
+ 			case 1:
+           
+ 			Ajouter_un_joueur(1);
+ 			break;
+ 			case 2:
+ 			modifier_un_joueur();
+ 			break;
+ 			case 3:
+ 			Supprimer_un_joueur();
+ 			break;
+ 			
+ 			case 4:
+ 			 Afficher_un_joueur(1);
+ 			break;
+ 			case 5:
+ 			Rechercher_un_joueur();
+ 			break;
+ 			
+ 			
+ 			
+ 			}
+ 		}else{break;}
+ 		}
+ 		
+ 		}
+    
 void  main() {
    struct Equipe e;
+   menu();
 
   }
