@@ -19,7 +19,7 @@ struct Equipe equip[100] = {
     {2,"kianluigi Donnarumma", 99, "gardien", 25, 0},
     {3,"airgil van Dijk", 4, "défenseur", 33, 15},
     {4,"luka Modric", 10, "milieu", 39, 45},
-    {5,"kylian Mbappé", 7, "attaquant", 26, 220},
+    {5,"karim Mbappé", 7, "attaquant", 26, 220},
     {6,"manuel Neuer", 1, "gardien", 38, 0},
     {7,"sergio Ramos", 4, "défenseur", 39, 105},
     {8,"sevin De Bruyne", 17, "milieu", 34, 95},
@@ -313,10 +313,12 @@ void modifier_un_joueur(){
 printf("choisir le neuvaux age pour %s : ",equip[check].nom_et_prenom);
 scanf("%d",&equip[check].age);
     break;
-
-   case 3:
 printf("choisir le neuvaux nombre de buts pour %s : ",equip[check].nom_et_prenom);
 scanf("%d",&equip[check].buts);
+   case 3:
+     printf("Entre Le Id de joeur : ");
+     scanf("%d",&equip[check].age);
+
    break;
    
    
@@ -331,11 +333,70 @@ scanf("%d",&equip[check].buts);
 
     }
 }
+void Rechercher_un_joueur(){
+int choix_Rechercher;
+int id_Rechercher;
+char nom_Rechercher[20];
+ printf("\n choix de recherch:\n1)par id : \n2) par nom :");
+ printf("\n choisir :");
+     scanf("%d",&choix_Rechercher);
+     if(choix_Rechercher==1||choix_Rechercher==2){
+  switch(choix_Rechercher){
+    
+         
+    case 1:
+     printf("\n Entre id :");
+     scanf("%d",&id_Rechercher);
+     if(id_Rechercher<= count){
+
+         printf("\nJoueur :id : %d|Nom et prénom : %s|Maillot : %d |Poste : %s|Age : %d|Buts : %d\n", 
+                       id_Rechercher, equip[id_Rechercher].nom_et_prenom, equip[id_Rechercher].numeroMaillot, equip[id_Rechercher].poste, equip[id_Rechercher].age, equip[id_Rechercher].buts);
+     
+     }else{
+printf("!! no result !!");
+     }
+
+    break;
+
+    case 2:
+    clear_buffer();
+printf("\nEnter nom  pour Rechercher : ");
+  
+  fgets(nom_Rechercher, sizeof(nom_Rechercher), stdin);
+  nom_Rechercher[strcspn(nom_Rechercher, "\n")] = '\0';
+  
+    
+     int trouv=1;
+     for(int getnom =0;getnom < count;getnom++){
+        char prenom1[50];
+        int k = 0;
+        
+            while (equip[getnom].nom_et_prenom[k] != ' ' && equip[getnom].nom_et_prenom[k] != '\0') {
+                prenom1[k] = equip[getnom].nom_et_prenom[k];
+                k++;
+            }
+            prenom1[k] = '\0';
+if(strcmp(prenom1,nom_Rechercher)==0){
+trouv=0;
+  printf("\nJoueur :id : %d|Nom et prénom : %s|Maillot : %d |Poste : %s|Age : %d|Buts : %d\n", 
+                       getnom, equip[getnom].nom_et_prenom, equip[getnom].numeroMaillot, equip[getnom].poste, equip[getnom].age, equip[getnom].buts);
+   
+
+}else if(getnom +1 ==count &&trouv==1){
+
+printf("!! no result !!");
+
+}
+        }
+    
+    break;
+    }
+     }
+     
+    }
 void  main() {
    struct Equipe e;
-   Afficher_un_joueur(1);
-   modifier_un_joueur();
-  Afficher_un_joueur(1);
+  Rechercher_un_joueur();
 
 
 
