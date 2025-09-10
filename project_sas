@@ -253,7 +253,7 @@ case 2: // Tri par âge
 
  }
 
-
+}
 void modifier_un_joueur(){
 boucle_while=0;
   while (boucle_while != 1)
@@ -274,6 +274,7 @@ boucle_while=0;
     }
   }
 }
+
 
 void  main() {
    struct Equipe e;
