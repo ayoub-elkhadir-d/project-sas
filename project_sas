@@ -13,18 +13,20 @@ int numeroMaillot;
 char poste[11];
 int age;
 int buts;
+int statu;
 };
 struct Equipe equip[100] = {
-    {1,"karim Benzema", 9,"attaquant",35,210},
-    {2,"kianluigi Donnarumma", 99, "gardien", 25, 0},
-    {3,"airgil van Dijk", 4, "défenseur", 33, 15},
-    {4,"luka Modric", 10, "milieu", 39, 45},
-    {5,"karim Mbappé", 7, "attaquant", 26, 220},
-    {6,"manuel Neuer", 1, "gardien", 38, 0},
-    {7,"sergio Ramos", 4, "défenseur", 39, 105},
-    {8,"sevin De Bruyne", 17, "milieu", 34, 95},
-    {9,"robert Lewandowski", 9, "attaquant", 37, 320},
-    {10,"achraf Hakimi", 2, "défenseur",27,25}
+    {0,"ayoub Benzema", 9,"attaquant",35,210,0},
+    {1,"karim Benzema", 9,"attaquant",35,210,0},
+    {2,"kianluigi Donnarumma", 99, "gardien", 25, 0,1},
+    {3,"airgil van Dijk", 4, "défenseur", 33, 15,0},
+    {4,"luka Modric", 10, "milieu", 39, 45,0},
+    {5,"kylian Mbappé", 7, "attaquant", 26, 220,1},
+    {6,"manuel Neuer", 1, "gardien", 38, 0,0},
+    {7,"sergio Ramos", 4, "défenseur", 39, 105,0},
+    {8,"sevin De Bruyne", 17, "milieu", 34, 95,0},
+    {9,"robert Lewandowski", 9, "attaquant", 37, 320,0},
+    {10,"achraf Hakimi", 2, "défenseur",27,25,0}
 };
 int choix_de_post;
 
@@ -33,14 +35,7 @@ void clear_buffer() {
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void getnom(char fullName[], char firstName[]) {
-    int i = 0;
-    while (fullName[i] != '\0' && fullName[i] != ' ') {
-        firstName[i] = fullName[i];
-        i++;
-    }
-    firstName[i] = '\0';
-}
+
 
 void line(){
 
@@ -109,6 +104,7 @@ scanf("%d",&equip[count].age);
 
 printf("Enter buts de joeur %d : ",count_joeur+1);
 scanf("%d",&equip[count].buts);
+equip[count].statu=0;
 line();
 count ++;
 equip[count].id+=1;
@@ -122,24 +118,11 @@ case 1: // Tri alphabétique par nom (seulement le premier nom)
     for (int step = 0; step < count - 1; step++) {
         int min_idx = step;
         for (int i = step + 1; i < count; i++) {
-            char prenom1[50], prenom2[50];
-
           
-            int k = 0;
-            while (equip[i].nom_et_prenom[k] != ' ' && equip[i].nom_et_prenom[k] != '\0') {
-                prenom1[k] = equip[i].nom_et_prenom[k];
-                k++;
-            }
-            prenom1[k] = '\0'; 
-            k = 0;
-            while (equip[min_idx].nom_et_prenom[k] != ' ' && equip[min_idx].nom_et_prenom[k] != '\0') {
-                prenom2[k] = equip[min_idx].nom_et_prenom[k];
-                k++;
-            }
-            prenom2[k] = '\0';
 
+         
            
-            if (strcmp(prenom1, prenom2) < 0) {
+            if (strcmp(equip[i].nom_et_prenom, equip[min_idx].nom_et_prenom) > 0) {
                 min_idx = i;
             }
         }
@@ -151,9 +134,10 @@ case 1: // Tri alphabétique par nom (seulement le premier nom)
             equip[min_idx] = temp;
         }
 
-        
-                       printf("\nJoueur %d :\nNom et prénom : %s|Maillot : %d |Poste : %s|Age : %d|Buts : %d\n", 
-                        step + 1, equip[step].nom_et_prenom, equip[step].numeroMaillot, equip[step].poste, equip[step].age, equip[step].buts);
+             if(equip[min_idx].statu != 1){
+                       printf("\nJoueur |id : %d|Nom et prénom : %s|Maillot : %d |Poste : %s|Age : %d|Buts : %d\n", 
+                        equip[step].id, equip[step].nom_et_prenom, equip[step].numeroMaillot, equip[step].poste, equip[step].age, equip[step].buts);
+                       }
                        }
          break;
 
@@ -161,7 +145,7 @@ case 1: // Tri alphabétique par nom (seulement le premier nom)
 case 2: // Tri par âg
 
         
-            for (int step = 0; step < count - 1; step++) {
+            for (int step = 0; step < count; step++) {
                 int min_idx = step;
                 for (int i = step + 1; i < count; i++) {
                     if (equip[i].age < equip[min_idx].age){
@@ -347,7 +331,7 @@ char nom_Rechercher[20];
     case 1:
      printf("\n Entre id :");
      scanf("%d",&id_Rechercher);
-     if(id_Rechercher<= count){
+     if(id_Rechercher<= count&&equip[count].statu){
 
          printf("\nJoueur :id : %d|Nom et prénom : %s|Maillot : %d |Poste : %s|Age : %d|Buts : %d\n", 
                        id_Rechercher, equip[id_Rechercher].nom_et_prenom, equip[id_Rechercher].numeroMaillot, equip[id_Rechercher].poste, equip[id_Rechercher].age, equip[id_Rechercher].buts);
@@ -366,11 +350,11 @@ printf("\nEnter nom  pour Rechercher : ");
   nom_Rechercher[strcspn(nom_Rechercher, "\n")] = '\0';
   
     
-     int trouv=1;
+     
      for(int getnom =0;getnom < count;getnom++){
         char prenom1[50];
         int k = 0;
-        
+        int trouv=1;
             while (equip[getnom].nom_et_prenom[k] != ' ' && equip[getnom].nom_et_prenom[k] != '\0') {
                 prenom1[k] = equip[getnom].nom_et_prenom[k];
                 k++;
@@ -394,10 +378,22 @@ printf("!! no result !!");
      }
      
     }
+
+    void Supprimer_un_joueur(){
+        int id_pour_Supprimer;
+       printf("\n Entre id pour Supprimer :");
+       scanf("%d",&id_pour_Supprimer);
+     if(id_pour_Supprimer<= count){
+        for(int r =0;r< count ;r++){
+            if(equip[r].id==id_pour_Supprimer){
+
+           equip[r].statu=1;
+
+            }
+        }
+     }
+    } 
 void  main() {
    struct Equipe e;
-  Rechercher_un_joueur();
-
-
 
   }
