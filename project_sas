@@ -41,13 +41,22 @@ void line(){
 
   printf("\n --------------------------------------\n");
 }
+void afficher_entete_tableau() {
+    printf("\n-------------------------------------------------------------------------------\n");
+    printf("| %-4s | %-20s | %-8s | %-10s | %-3s | %-4s |\n",
+           "ID", "Nom et Prénom", "Maillot", "Poste", "Age", "Buts");
+    printf("-------------------------------------------------------------------------------\n");
+}
+void afficher_fin_tableau() {
+    printf("-------------------------------------------------------------------------------\n");
+}
 
 
 void afficher_joueur(struct Equipe e) {
     if (e.statu != 1) {
-        printf("\n|id:%d| Nom:%s | Maillot:%d | Poste:%s | Age:%d | Buts:%d\n",
+        printf("| %-4d | %-20s | %-8d | %-10s | %-3d | %-4d |\n",
                e.id, e.nom_et_prenom, e.numeroMaillot, e.poste, e.age, e.buts);
-}
+    }
 }
 //---------------------------------------------------------------------------------
 
@@ -139,8 +148,9 @@ case 1: // Tri alphabأ©tique par nom (seulement le premier nom)
             equip[step] = equip[min_idx];
             equip[min_idx] = temp;
         }
-
+            afficher_entete_tableau();
             afficher_joueur(equip[step]);
+            afficher_entete_tableau();
                        }
          break;
 
@@ -160,7 +170,9 @@ case 2: // Tri par أ¢g
                     equip[step] = equip[min_idx];
                     equip[min_idx] = temp;
                 }
-                      afficher_joueur(equip[step]);
+                     afficher_entete_tableau();
+                     afficher_joueur(equip[step]);
+                      afficher_entete_tableau();
              }
             break;
 
@@ -183,7 +195,9 @@ case 2: // Tri par أ¢g
            
        if(strcmp(equip[i].poste,"gardien")==0){
       
-          afficher_joueur(equip[i]);
+                       afficher_entete_tableau();
+                     afficher_joueur(equip[i]);
+                      afficher_entete_tableau();
      
 
        }
@@ -195,7 +209,9 @@ case 2: // Tri par أ¢g
               for (int i = 0; i < count; i++) {
             
        if(strcmp(equip[i].poste,"defenseur")==0){
-          afficher_joueur(equip[i]);
+                     afficher_entete_tableau();
+                     afficher_joueur(equip[i]);
+                      afficher_entete_tableau();
      
 
        }
@@ -207,7 +223,9 @@ case 2: // Tri par أ¢g
        for (int i = 0; i < count; i++) {
             
        if(strcmp(equip[i].poste,"milieu")==0){
-          afficher_joueur(equip[i]);
+                     afficher_entete_tableau();
+                     afficher_joueur(equip[i]);
+                      afficher_entete_tableau();
      
 
        }
@@ -218,7 +236,9 @@ case 2: // Tri par أ¢g
         for (int i = 0; i < count; i++) {
             
        if(strcmp(equip[i].poste,"attaquant")==0){
-        afficher_joueur(equip[i]);
+                       afficher_entete_tableau();
+                     afficher_joueur(equip[i]);
+                      afficher_entete_tableau();
      
 
        }
@@ -378,9 +398,9 @@ printf("!! no result !!");
        scanf("%d",&id_pour_Supprimer);
        
      if(id_pour_Supprimer<=nxid){
-      printf("1");
+     
         for(int r =0;r<=count ;r++){
-          printf("2");
+          
             if(equip[r].id==id_pour_Supprimer){
               
            equip[r].statu=1;
@@ -389,14 +409,67 @@ printf("!! no result !!");
         }
      }
     } 
+    
+    void Ajouter_menu(){
+        
+        int choix_de_ajouter;
+        while(choix_de_ajouter!=0){
+        printf("choisi:");
+        printf("\n1)un joeur");
+        printf("\n2) beaucoup de joeur");
+        printf("\n0) quiitter ce menu");
+        printf("\nchoisir un choix :");
+        scanf("%d",&choix_de_ajouter);
+        switch(choix_de_ajouter){
+            case 1:
+            Ajouter_un_joueur(1);
+            break;
+            case 2:
+            choix_de_ajouter=0;
+            printf("\nentre le numero de joueurs :");
+            scanf("%d",&choix_de_ajouter);
+            Ajouter_un_joueur(choix_de_ajouter);
+            break;
+            
+            case 0:
+            break;
+        }  
+     }
+ }
+void Afficher_menu(){
+    int choix_de_Afficher;
+        while(choix_de_Afficher!=0){
+        printf("choisi:");
+        printf("\n1)Trier les joueurs par ordre alphabétique");
+        printf("\n2)Trier les joueurs par âge");
+        printf("\n3)Afficher les joueurs par poste");
+        printf("\nchoisir un choix :");
+        printf("\n0)Quitter");
+        scanf("%d",&choix_de_Afficher);
+        switch(choix_de_Afficher){
+            case 1:
+            Afficher_un_joueur(1);
+            break;
+            case 2:
+            Afficher_un_joueur(2);
+            break;
+            case 3:
+            Afficher_un_joueur(3);
+            break;
+            case 0:
+            break;
+        }  
+     }
+}
+
 void menu() {
     int choix;
     do {
         printf("\n--- Menu ---\n");
-        printf("1. Ajouter joueur\n");
+        printf("1. Ajouter menu\n");
         printf("2. Modifier joueur\n");
         printf("3. Supprimer joueur\n");
-        printf("4. Afficher joueurs\n");
+        printf("4. Afficher menu\n");
         printf("5. Rechercher joueur\n");
         printf("0. Quitter\n");
         printf("Votre choix: ");
@@ -404,10 +477,10 @@ void menu() {
         clear_buffer();
 
         switch (choix) {
-            case 1: Ajouter_un_joueur(1); break;
+            case 1: Ajouter_menu(); break;
             case 2: modifier_un_joueur(); break;
             case 3: Supprimer_un_joueur(); break;
-            case 4: Afficher_un_joueur(1); break;
+            case 4: Afficher_menu(); break;
             case 5: Rechercher_un_joueur(); break;
             case 0: printf("Au revoir!\n"); break;
             default: printf("Choix invalide!\n");
@@ -416,7 +489,7 @@ void menu() {
 }
 
 void  main() {
-   struct Equipe e;
+   
    menu();
 
   }
