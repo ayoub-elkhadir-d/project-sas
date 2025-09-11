@@ -48,7 +48,7 @@ void afficher_entete_tableau() {
     printf("____________________________________________________________________\n");
 }
 void afficher_fin_tableau() {
-    printf("___________________________________________________________________________________\n");
+    printf("_____________________________________________________________________\n");
 }
 
 
@@ -159,7 +159,7 @@ afficher_entete_tableau();
             afficher_joueur(equip[step]);
            
                        }
-        afficher_entete_tableau();
+        afficher_fin_tableau();
          break;
 
 
@@ -182,7 +182,7 @@ case 2: // Tri par أ¢g
                      afficher_joueur(equip[step]);
                      
              }
-              afficher_entete_tableau();
+             afficher_fin_tableau();
             break;
 
   case 3:
@@ -295,70 +295,61 @@ scanf("%d",&equip[check].age);
 
     }
 }
-void Rechercher_un_joueur(){
-int choix_Rechercher;
-int id_Rechercher;
-int truver=1;
-char nom_Rechercher[20];
- printf("\n choix de recherch:\n1)par id :\n2)par nom :");
- printf("\n choisir :");
-     scanf("%d",&choix_Rechercher);
-     if(choix_Rechercher==1||choix_Rechercher==2){
-  switch(choix_Rechercher){
-    
-         
-    case 1:
-   void Rechercher_un_joueur() {
-    int id;
-    printf("\nEntre ID du joueur: ");
-    scanf("%d", &id);
-
-    for (int i = 0; i < count; i++) {
-        if (equip[i].id == id && equip[i].statu != 1) {
-            afficher_joueur(equip[i]);
-            return;
-        }
-    }
-    printf("Aucun joueur trouvé avec cet ID!\n");
-}else if(truver==1){
-printf("!! no result !!");
-     }
-
-    break;
-
-    case 2:
+void Rechercher_un_joueur() {
+    int choix_Rechercher;
+    char recherche[50];
+    printf("\nChoix de recherche:\n1) Par ID\n2) Par nom\n");
+    printf("Choisir: ");
+    scanf("%d", &choix_Rechercher);
     clear_buffer();
-printf("\nEnter nom  pour Rechercher : ");
-  
-  fgets(nom_Rechercher, sizeof(nom_Rechercher), stdin);
-  nom_Rechercher[strcspn(nom_Rechercher, "\n")] = '\0';
-  
-    
-     
-     for(int getnom =0;getnom < count;getnom++){
-        char prenom1[50];
-        int k = 0;
-        int trouv=1;
-            while (equip[getnom].nom_et_prenom[k] != ' ' && equip[getnom].nom_et_prenom[k] != '\0') {
-                prenom1[k] = equip[getnom].nom_et_prenom[k];
-                k++;
+
+    if (choix_Rechercher == 1) {
+        int id_Rechercher;
+        printf("Entre ID: ");
+        scanf("%d", &id_Rechercher);
+        clear_buffer();
+
+        for (int i = 0; i < count; i++) {
+            if (equip[i].id == id_Rechercher && equip[i].statu != 1) {
+                afficher_joueur(equip[i]);
+                return;
             }
-            prenom1[k] = '\0';
-if(strcmp(prenom1,nom_Rechercher)==0){
-trouv=0;
-afficher_joueur(equip[getnom]);
-}else if(getnom +1 ==count &&trouv==1){
-
-printf("!! no result !!");
-
-}
         }
-    
-    break;
+        printf("!! Aucun résultat !!\n");
+
+    } else if (choix_Rechercher == 2) {
+        printf("Enter nom ou nom et prenom: ");
+        fgets(recherche, sizeof(recherche), stdin);
+        recherche[strcspn(recherche, "\n")] = '\0';
+
+        int trouve = 0;
+
+        for (int i = 0; i < count; i++) {
+            if (equip[i].statu != 1) {
+                char prenom[50], nom_complet[50];
+                strcpy(nom_complet, equip[i].nom_et_prenom);
+
+                // Séparer le prénom
+                int k = 0;
+                while (nom_complet[k] != ' ' && nom_complet[k] != '\0') {
+                    prenom[k] = nom_complet[k];
+                    k++;
+                }
+                prenom[k] = '\0';
+
+                // Comparaison
+                if (strcmp(recherche, nom_complet) == 0 || strcmp(recherche, prenom) == 0) {
+                    afficher_joueur(equip[i]);
+                    trouve = 1;
+                }
+            }
+        }
+
+        if (!trouve) {
+            printf("!! Aucun résultat !!\n");
+        }
     }
-     }
-     
-    }
+}
 
     void Supprimer_un_joueur(){
         int id_pour_Supprimer;
@@ -540,7 +531,6 @@ void menu() {
         }
     } while (choix != 0);
 }
-
 void  main() {
    struct Equipe e;
    menu();
