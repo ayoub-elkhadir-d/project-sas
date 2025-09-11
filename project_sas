@@ -398,9 +398,9 @@ printf("!! no result !!");
        scanf("%d",&id_pour_Supprimer);
        
      if(id_pour_Supprimer<=nxid){
-     
+      printf("1");
         for(int r =0;r<=count ;r++){
-          
+          printf("2");
             if(equip[r].id==id_pour_Supprimer){
               
            equip[r].statu=1;
@@ -409,6 +409,89 @@ printf("!! no result !!");
         }
      }
     } 
+    
+   void afficher_statistiques() {
+    int total = 0;
+    int nbGardien = 0, nbDefenseur = 0, nbMilieu = 0, nbAttaquant = 0;
+    int totalAge = 0, totalButs = 0;
+    int maxButs = -1, idxMaxButs = -1;
+    int minAge = 999, idxMinAge = -1;
+    int maxAge = -1, idxMaxAge = -1;
+
+    for (int i = 0; i < count; i++) {
+        if (equip[i].statu == 1) continue;
+        total++;
+
+        // compter par poste
+        if (strcmp(equip[i].poste, "gardien") == 0) nbGardien++;
+        else if (strcmp(equip[i].poste, "defenseur") == 0) nbDefenseur++;
+        else if (strcmp(equip[i].poste, "milieu") == 0) nbMilieu++;
+        else if (strcmp(equip[i].poste, "attaquant") == 0) nbAttaquant++;
+
+        // sommes
+        totalAge += equip[i].age;
+        totalButs += equip[i].buts;
+
+        // meilleur buteur
+        if (equip[i].buts > maxButs) {
+            maxButs = equip[i].buts;
+            idxMaxButs = i;
+        }
+
+        // plus jeune
+        if (equip[i].age < minAge) {
+            minAge = equip[i].age;
+            idxMinAge = i;
+        }
+
+        // plus âgé
+        if (equip[i].age > maxAge) {
+            maxAge = equip[i].age;
+            idxMaxAge = i;
+        }
+    }
+
+    printf("\n------------------------- Statistiques de l'équipe -------------------------\n");
+    printf("| %-30s | %-30d |\n", "Nombre total de joueurs", total);
+    printf("| %-30s | %-30d |\n", "Gardien(s)", nbGardien);
+    printf("| %-30s | %-30d |\n", "Défenseur(s)", nbDefenseur);
+    printf("| %-30s | %-30d |\n", "Milieu(x)", nbMilieu);
+    printf("| %-30s | %-30d |\n", "Attaquant(s)", nbAttaquant);
+
+    if (total > 0) {
+        printf("| %-30s | %-30.2f |\n", "Âge moyen", (double)totalAge / total);
+        printf("| %-30s | %-30d |\n", "Nombre total de buts", totalButs);
+        printf("| %-30s | %-30.2f |\n", "Buts moyen par joueur", (double)totalButs / total);
+    }
+
+    if (idxMaxButs != -1) {
+        printf("| %-30s | %-30s |\n", "Meilleur buteur", equip[idxMaxButs].nom_et_prenom);
+        printf("| %-30s | %-30d |\n", "Nombre de buts", equip[idxMaxButs].buts);
+    }
+    if (idxMinAge != -1) {
+        printf("| %-30s | %-30s |\n", "Plus jeune joueur", equip[idxMinAge].nom_et_prenom);
+        printf("| %-30s | %-30d |\n", "Âge", equip[idxMinAge].age);
+    }
+    if (idxMaxAge != -1) {
+        printf("| %-30s | %-30s |\n", "Plus âgé joueur", equip[idxMaxAge].nom_et_prenom);
+        printf("| %-30s | %-30d |\n", "Âge", equip[idxMaxAge].age);
+    }
+
+    // seuil pour buts
+    int seuil, compteur = 0;
+    printf("\nEntrez le nombre de buts minimum : ");
+    scanf("%d", &seuil);
+
+    for (int i = 0; i < count; i++) {
+        if (equip[i].statu != 1 && equip[i].buts > seuil) {
+            compteur++;
+        }
+    }
+    printf("| %-30s | %-30d |\n", "Joueurs avec buts > seuil", compteur);
+
+    printf("----------------------------------------------------------------------------\n");
+}
+
     
     void Ajouter_menu(){
         
@@ -471,6 +554,7 @@ void menu() {
         printf("3. Supprimer joueur\n");
         printf("4. Afficher menu\n");
         printf("5. Rechercher joueur\n");
+         printf("6. statistic \n");
         printf("0. Quitter\n");
         printf("Votre choix: ");
         scanf("%d", &choix);
@@ -482,6 +566,7 @@ void menu() {
             case 3: Supprimer_un_joueur(); break;
             case 4: Afficher_menu(); break;
             case 5: Rechercher_un_joueur(); break;
+            case 6: afficher_statistiques(); break;
             case 0: printf("Au revoir!\n"); break;
             default: printf("Choix invalide!\n");
         }
@@ -489,7 +574,7 @@ void menu() {
 }
 
 void  main() {
-   
+   struct Equipe e;
    menu();
 
   }
